@@ -71,15 +71,7 @@ router.get("/oauth2callback", async (req, res) => {
     oauth2Client.setCredentials(tokens);
     userCredential = tokens;
 
-    const youtube = google.youtube("v3");
-    const response = await youtube.videos.list({
-      auth: oauth2Client,
-      part: "snippet",
-      myRating: "like",
-      maxResults: 5,
-    });
-    const videos = response.data.items;
-    res.redirect("/home" + { videos, error: null });
+    res.redirect("/home");
   } catch (error) {
     console.log("Error:", error);
     res.status(500).redirect("500");
@@ -108,7 +100,19 @@ router.get("/revoke", (req, res) => {
 
 // 로그인 이후의 페이지 경로들 입니다
 // 영상 창 렌더링, url이 http://localhost:8080/home 일 때 렌더링 됨
-router.get("/home", function (req, res) {
+// youyube api로 영상들을 불러옴
+router.get("/home", async function (req, res) {
+  const youtube = google.youtube("v3");
+  const response = await youtube.videos.list({
+    auth: oauth2Client,
+    part: "snippet",
+    chart: "mostPopular",
+    maxResults: 5,
+    regionCode: "kr",
+  });
+  const videos = response.data.items;
+  console.log(videos);
+
   res.render("videos");
 });
 
