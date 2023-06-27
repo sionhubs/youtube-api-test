@@ -1,0 +1,87 @@
+@font-face {
+  font-family: "CWDangamAsac-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Login: 계정에 따른 맞춤형 분석 제공, 개인정보 이슈 관리  */
+
+body {
+  width: 100%;
+  background: #07064a;
+}
+
+/* Forms */
+.login_div {
+  position: absolute;
+  top: 35vh;
+  right: 7vw;
+  width: 35vw;
+  height: 50vh;
+  overflow: hidden;
+  margin: 0;
+  margin-left: 10vw;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Bouton Sign In */
+
+.button_sign {
+  width: 30vw;
+  height: 10vh;
+  background: #c5cae5;
+  box-shadow: 0px 12px 21px 4px rgba(186, 190, 211, 0.15);
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: 0.09em;
+  color: #07064a;
+  margin-top: 5vh;
+}
+
+.button_sign:hover {
+  background-color: rgb(155, 192, 219);
+}
+
+.logo_box {
+  display: inline-block;
+  margin-left: 5vw;
+  float: left;
+}
+
+.logo {
+  font-family: "CWDangamAsac-Bold";
+  color: #c5cae5;
+  font-style: normal;
+  font-weight: 200;
+  font-size: 100px;
+  line-height: 77px;
+  position: absolute;
+  top: 3vh;
+}
+
+.logo_login {
+  text-align: center;
+  position: absolute;
+  top: 20vh;
+  width: 38%;
+}
+
+.hr1 {
+  width: 12vw;
+  float: left;
+}
+.google {
+  float: left;
+  margin-left: 2vw;
+  width: 15%;
+}
+.hr2 {
+  margin-left: 2vw;
+  width: 13vw;
+  float: left;
+}
