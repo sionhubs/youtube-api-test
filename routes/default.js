@@ -1,11 +1,15 @@
 const express = require("express");
+// 구글 api 서비스를 불러오는 패키지
 const { google } = require("googleapis");
 const router = express.Router();
 const config = require("../util/key");
 
+// 로그인 창 렌더링, url이 http://localhost:8080/ 일 때 렌더링 됨
 router.get("/", function (req, res) {
   res.render("login");
 });
+
+// 아래로는 유튜브 사용자 인증을 받기 위한 코드 입니다
 
 /**
  * OAuth2 인증에 사용되는 CLIENT_ID, CLIENT_SECRET 및 REDIRECT_URI에 액세스해야 합니다.
@@ -52,6 +56,7 @@ router.get("/login-youtube", (req, res) => {
 });
 
 // Google OAuth 2.0 서버로부터 콜백을 수신하는 예제입니다.
+// 정상적으로 불러오면 videos.ejs 페이지를 렌더링 합니다
 router.get("/oauth2callback", async (req, res) => {
   const { code } = req.query;
 
@@ -68,7 +73,7 @@ router.get("/oauth2callback", async (req, res) => {
       maxResults: 5,
     });
     const videos = response.data.items;
-    res.render("end", { videos, error: null });
+    res.render("video", { videos, error: null });
   } catch (error) {
     console.log("Error:", error);
     res.render("videoList", {
@@ -80,6 +85,7 @@ router.get("/oauth2callback", async (req, res) => {
 });
 
 // 토큰 취소 예제입니다.
+// 취소되면 로그인 화면으로 되돌아 갑니다(login.ejs 페이지를 렌더링 합니다)
 router.get("/revoke", (req, res) => {
   if (!userCredential) {
     res.status(400).send("No access token found.").render("404");
@@ -98,14 +104,18 @@ router.get("/revoke", (req, res) => {
     });
 });
 
+// 로그인 이후의 페이지 경로들 입니다
+// 영상 창 렌더링, url이 http://localhost:8080/home 일 때 렌더링 됨
 router.get("/home", function (req, res) {
   res.render("videos");
 });
 
+// 분석 창 렌더링, url이 http://localhost:8080/analysis 일 때 렌더링 됨
 router.get("/analysis", function (req, res) {
   res.render("analysis");
 });
 
+// 시간종료 창 렌더링, url이 http://localhost:8080/end 일 때 렌더링 됨
 router.get("/end", function (req, res) {
   res.render("end");
 });

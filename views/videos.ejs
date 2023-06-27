@@ -1,3 +1,5 @@
+<!-- 영상이 배열되어있는 화면이 나타나는 html 파일 -->
+<!-- 프론트 쪽에서 home 페이지를 만들면 바로 반영할 예정입니다 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,123 +9,10 @@
     <link rel="stylesheet" href="../styles/style.css" />
     <!-- 유튜브 iframe 불러오기 -->
     <script src="https://www.youtube.com/iframe_api" defer></script>
+    <!-- 시간 제한을 설정하는 자바스크립트 코드 불러오기 -->
+    <script src="/scripts/time.js"></script>
   </head>
   <body>
-    <h1>내 유튜브 재생 목록</h1>
-    <div class="form-container">
-      <div>
-        <label for="timeLimit">시간 제한 (분):</label>
-        <input
-          type="number"
-          id="timeLimit"
-          name="timeLimit"
-          min="1"
-          step="1"
-          value="10"
-        />
-      </div>
-      <div>
-        <label for="maxResults">동영상 수:</label>
-        <input
-          type="number"
-          id="maxResults"
-          name="maxResults"
-          min="1"
-          step="1"
-          value="10"
-        />
-      </div>
-      <div
-        id="remainingTime"
-        style="text-align: center; font-size: 1.5rem; margin-top: 1rem"
-      ></div>
-    </div>
-    <ul>
-      <% videos.forEach((video) => { %>
-      <li>
-        <a href="#" onclick="playVideo('<%= video.id %>')">
-          <%= video.snippet.title %>
-        </a>
-      </li>
-      <% }); %>
-    </ul>
-    <div id="player"></div>
+    <!--  -->
   </body>
-  <!-- 스크립트 파일이 작동하지 않을 경우 대비하여 넣어둠 -->
-  <!-- <script>
-    let player;
-    let timer;
-    let remainingTime = 0;
-
-    function playVideo(videoId) {
-      if (player) {
-        player.destroy();
-      }
-
-      if (timer) {
-        clearInterval(timer);
-      }
-
-      player = new YT.Player("player", {
-        height: "360",
-        width: "640",
-        videoId: videoId,
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-        },
-      });
-
-      function onPlayerReady(event) {
-        const timeLimit = document.getElementById("timeLimit").value;
-        remainingTime = timeLimit * 60;
-        if (remainingTime > 0) {
-          startTimer(remainingTime);
-          setTimeout(() => {
-            event.target.stopVideo();
-            clearInterval(timer);
-            alert(`시간 제한 (${timeLimit}분) 도달! 동영상이 중지되었습니다.`);
-          }, remainingTime * 1000);
-        } else {
-          event.target.playVideo();
-        }
-      }
-    }
-
-    function startTimer(remainingTime) {
-      if (remainingTime <= 0) return;
-
-      updateRemainingTime(remainingTime);
-
-      timer = setInterval(() => {
-        remainingTime--;
-        if (remainingTime <= 0) {
-          clearInterval(timer);
-          window.close();
-        } else {
-          updateRemainingTime(remainingTime);
-        }
-      }, 1000);
-    }
-
-    function updateRemainingTime(remainingTime) {
-      if (remainingTime >= 0) {
-        const minutes = Math.floor(remainingTime / 60);
-        const seconds = remainingTime % 60;
-        document.getElementById(
-          "remainingTime"
-        ).innerText = `남은 시간: ${minutes}:${seconds
-          .toString()
-          .padStart(2, "0")}`;
-      }
-    }
-
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        player = null;
-        clearInterval(timer);
-        document.getElementById("remainingTime").innerText = "";
-      }
-    }
-  </script> -->
 </html>

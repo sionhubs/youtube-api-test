@@ -1,9 +1,11 @@
+<!-- 로그인 페이지를 나타내는 html 파일 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>유튜브 중독방지 웹서비스</title>
+    <!-- public 폴더 안의 styles폴더 안의 css 파일에 접근합니다 -->
     <link rel="stylesheet" href="/styles/login-style.css" />
   </head>
 
@@ -21,6 +23,7 @@
         </div>
         <h3 style="clear: both; color: #c5cae5">구글계정을 로그인해주세요</h3>
         <div class="button_sign_div"></div>
+        <!-- 로그인 버튼을 누르면 /login-youtube경로로 이동합니다 -> 이 경로는 사용자 인증을 받기위한 경로입니다 -->
         <form action="/login-youtube" method="GET">
           <button class="button_sign">LOGIN</button>
         </form>
