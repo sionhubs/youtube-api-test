@@ -10,6 +10,10 @@ const config = require("../util/key");
 router.get("/", function (req, res) {
   res.render("login");
 });
+// 로그인 창 렌더링, url이 http://localhost:8080/login 일 때 렌더링 됨
+router.get("/login", function (req, res) {
+  res.render("login");
+});
 
 // 아래로는 유튜브 사용자 인증을 받기 위한 코드 입니다
 
@@ -75,14 +79,10 @@ router.get("/oauth2callback", async (req, res) => {
       maxResults: 5,
     });
     const videos = response.data.items;
-    res.render("video", { videos, error: null });
+    res.redirect("/home" + { videos, error: null });
   } catch (error) {
     console.log("Error:", error);
-    res.render("videoList", {
-      videos: [],
-      error: "동영상 목록을 가져오는 데 실패했습니다.",
-    });
-    res.status(500).render("500");
+    res.status(500).redirect("500");
   }
 });
 
@@ -90,7 +90,7 @@ router.get("/oauth2callback", async (req, res) => {
 // 취소되면 로그인 화면으로 되돌아 갑니다(login.ejs 페이지를 렌더링 합니다)
 router.get("/revoke", (req, res) => {
   if (!userCredential) {
-    res.status(400).send("No access token found.").render("404");
+    res.status(400).send("No access token found.").redirect("404");
     return;
   }
 
@@ -98,11 +98,11 @@ router.get("/revoke", (req, res) => {
     .revokeCredentials()
     .then(() => {
       console.log("Access token revoked.");
-      res.status(200).render("login");
+      res.status(200).redirect("/login");
     })
     .catch((error) => {
       console.log("Error revoking access token:", error);
-      res.status(500).render("500");
+      res.status(500).redirect("500");
     });
 });
 
