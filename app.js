@@ -1,3 +1,5 @@
+// 주 실행 파일입니다
+
 const express = require("express");
 // 파일 경로를 불러오는 패키지
 const path = require("path");
@@ -18,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // "../public/styles/style.css" 이렇게 불러오지 않고 "/styles/style.css" 이렇게 불러오는게 가능
 app.use(express.static("public"));
 
-// 라우트 사용하는 미들웨어 함수, url에 /경로 에 따라 렌더링되는 페이지가 달라짐
+// 라우트 사용하는 미들웨어 함수, url에 http://localhost:8080/경로 에 따라 렌더링되는 페이지가 달라짐
 app.use("/", defaultRoutes);
 app.use("/", videosRoutes);
 
@@ -32,7 +34,7 @@ app.use(function (error, req, res, next) {
   res.status(500).render("500");
 });
 
-// http://localhost:8080
+// http://localhost:8080로 접속하면 됩니다
 app.listen(8080, () => {
   console.log("Server is running on port 8080");
 });

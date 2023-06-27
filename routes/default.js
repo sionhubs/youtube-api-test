@@ -1,3 +1,5 @@
+// 사이트 안의 많은 경로들을 정의해놓은 파일입니다
+
 const express = require("express");
 // 구글 api 서비스를 불러오는 패키지
 const { google } = require("googleapis");
