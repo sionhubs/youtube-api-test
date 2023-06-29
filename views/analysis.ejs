@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>유튜브 중독방지 웹서비스</title>
+    <link rel="stylesheet" href="/styles/today.css" />
+    <link rel="stylesheet" href="/styles/analysis.css" />
+    <link rel="stylesheet" href="/styles/card.css" />
     <link rel="stylesheet" href="/styles/sidebar.css" />
     <script
       src="https://kit.fontawesome.com/510fbf9652.js"
@@ -14,6 +17,83 @@
   </head>
   <body>
     <%- include('includes/sidebar') %>
-    <!--  -->
+    <div class="start">
+      <h2 class="start_h2">Analysis | 김아무개님 분석</h2>
+      <h3 class="start_today">>> TODAY</h3>
+      <div class="bar-chart primary" data-total="76" animated>
+        <span class="bar-chart--inner" style="width: 76%">
+          <span class="bar-chart--text">5.5hr / 7hr</span></span
+        >
+      </div>
+      <div class="main-container">
+        <h1>일주일간 시청시간</h1>
+        <div class="year-stats">
+          <div class="month-group">
+            <div class="bar h-100"></div>
+            <p class="month">06.24</p>
+          </div>
+          <div class="month-group">
+            <div class="bar h-50"></div>
+            <p class="month">06.25</p>
+          </div>
+          <div class="month-group">
+            <div class="bar h-75"></div>
+            <p class="month">06.26</p>
+          </div>
+          <div class="month-group">
+            <div class="bar h-25"></div>
+            <p class="month">06.27</p>
+          </div>
+
+          <div class="month-group">
+            <div class="bar h-50"></div>
+            <p class="month">06.29</p>
+          </div>
+          <div class="month-group">
+            <div class="bar h-50"></div>
+            <p class="month">06.30</p>
+          </div>
+          <div class="month-group sel">
+            <div class="bar h-100"></div>
+            <p class="month">Today</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card_analysis">
+      <div class="ft-recipe">
+        <div class="ft-recipe__thumb">
+          <span id="close-modal"><i class="ion ion-md-close"></i></span>
+          <img src="/login/logo_login.png" alt="bigshorts" />
+        </div>
+        <div class="ft-recipe__content">
+          <header class="content__header">
+            <div class="row-wrapper">
+              <h2 class="recipe-title"><br />시청 분석</h2>
+            </div>
+            <ul class="recipe-details">
+              <li class="recipe-details-item time">
+                <i class="ion ion-ios-clock-outline"></i
+                ><span class="value">20</span><span class="title">videos</span>
+              </li>
+              <li class="recipe-details-item ingredients">
+                <i class="ion ion-ios-book-outline"></i
+                ><span class="value">39</span><span class="title">Shorts</span>
+              </li>
+              <li class="recipe-details-item servings">
+                <i class="ion ion-ios-person-outline"></i
+                ><span class="value">5시간35분</span
+                ><span class="title">시청시간</span>
+              </li>
+            </ul>
+          </header>
+          <p class="description">
+            사용자님의 시청 영상을 분석하여 정리한 관심태그입니다. 관심태그에
+            따라 활동을 추천합니다.<br /><br />#뷰티 #아이돌 메이크업 #잔나비
+            #브이로그 #산악브이로그<br /><br />
+          </p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

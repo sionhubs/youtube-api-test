@@ -6,20 +6,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>내 유튜브 재생 목록</title>
-    <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="/styles/sidebar.css" />
+    <!-- 유튜브 iframe 불러오기 -->
+    <script src="https://www.youtube.com/iframe_api" defer></script>
+    <!-- 시간 제한을 설정하는 자바스크립트 코드 불러오기 -->
+    <script src="/scripts/time.js"></script>
     <script
       src="https://kit.fontawesome.com/510fbf9652.js"
       crossorigin="anonymous"
       defer
     ></script>
-    <!-- 유튜브 iframe 불러오기 -->
-    <script src="https://www.youtube.com/iframe_api" defer></script>
-    <!-- 시간 제한을 설정하는 자바스크립트 코드 불러오기 -->
-    <script src="/scripts/time.js"></script>
   </head>
   <body>
     <!-- 아래 코드는 ejs 문법입니다, include 폴더 안의 sidebar.ejs를 불러옵니다 -->
     <%- include('includes/sidebar') %>
     <!--  -->
+    <ul>
+      <% for(var i=0; i < videos.length; i++) { %>
+      <li>
+        <div class="video">
+          <h2><%= videos[i].title %></h2>
+          <img
+            src="<%= videos[i].thumbnail || '/src/default-thumbnail.png' %>"
+            alt="<%= videos[i].title %> thumbnail"
+          />
+          <a href="http://localhost:8080/video/<%= videos[i].videoId %>"
+            >Watch Video</a
+          >
+        </div>
+      </li>
+      <% } %>
+    </ul>
   </body>
 </html>

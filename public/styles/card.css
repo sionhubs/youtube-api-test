@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Work+Sans:wght@300;400;500;600;700&display=swap");
+
+.ft-recipe {
+  height: 70vh;
+  background-color: #ffffffd7;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 88px 0 rgba(0, 0, 0, 0.1607843137);
+  position: absolute;
+  top: 80vh;
+  left: 32vw;
+  width: 58%;
+  border-radius: 30px;
+}
+.ft-recipe .ft-recipe__thumb {
+  position: relative;
+  height: 30vh;
+  box-shadow: 0px 0px 130px 0 rgba(0, 0, 0, 0.38);
+  text-align: center;
+}
+
+.ft-recipe .ft-recipe__thumb img {
+  height: 100%;
+  object-fit: contain;
+}
+.ft-recipe .ft-recipe__content {
+  flex: 1;
+  padding: 0 2em 1em;
+}
+.ft-recipe .ft-recipe__content .content__header .row-wrapper {
+  display: flex;
+  border-bottom: 5px solid #ebedf9d7;
+}
+
+.ft-recipe .ft-recipe__content .content__header .recipe-details {
+  display: flex;
+  list-style: none;
+  padding: 1.8em 0 2em;
+  margin: 0;
+  justify-content: space-between;
+}
+.ft-recipe
+  .ft-recipe__content
+  .content__header
+  .recipe-details
+  .recipe-details-item {
+  flex: 1;
+}
+.ft-recipe
+  .ft-recipe__content
+  .content__header
+  .recipe-details
+  .recipe-details-item
+  i {
+  font-size: 30px;
+}
+.ft-recipe
+  .ft-recipe__content
+  .content__header
+  .recipe-details
+  .recipe-details-item
+  .value {
+  color: #ff4f87;
+  margin-left: 0.35em;
+  vertical-align: bottom;
+  font-size: 24px;
+}
+.ft-recipe
+  .ft-recipe__content
+  .content__header
+  .recipe-details
+  .recipe-details-item
+  .title {
+  display: block;
+  margin-top: 3.8px;
+  font-size: 21px;
+  font-weight: 300;
+}

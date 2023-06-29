@@ -6,17 +6,18 @@ const express = require("express");
 const uuid = require("uuid");
 const router = express.Router();
 
+// scrapeRecommendedVideos 함수를 가져옵니다.
+const { scrapeRecommendedVideos } = require("../public/scripts/scraper");
+
 // 각 영상에 id를 정해 놓습니다
-router.get("/videos/:id", function (req, res) {
-  const videoId = req.params.id;
-
-  for (const video of storedvideos) {
-    if (video.id === videoId) {
-      return res.render("video-detail", { video: video });
-    }
+router.get("/video/:id", async function (req, res) {
+  try {
+    const video = req.params.id;
+    res.render("video-detail", { video });
+  } catch (error) {
+    console.error("Error:", error);
+    res.render("error");
   }
-
-  res.status(404).render("404");
 });
 
 module.exports = router;
