@@ -6,9 +6,6 @@ const express = require("express");
 const uuid = require("uuid");
 const router = express.Router();
 
-// scrapeRecommendedVideos 함수를 가져옵니다.
-const { scrapeRecommendedVideos } = require("../public/scripts/scraper");
-
 // 각 영상에 id를 정해 놓습니다
 router.get("/video/:id", async function (req, res) {
   try {
