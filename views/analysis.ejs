@@ -21,42 +21,31 @@
       <h2 class="start_h2">Analysis | 김아무개님 분석</h2>
       <h3 class="start_today">>> TODAY</h3>
       <div class="bar-chart primary" data-total="76" animated>
-        <span class="bar-chart--inner" style="width: 76%">
-          <span class="bar-chart--text"><%= watchTime %> / 7hr</span>
-        </span>
+        <span
+          class="bar-chart--inner"
+          style="width: <%= (watchTime / 0.5) * 100 %>%"
+        ></span>
+        <span class="bar-chart--text"><%= watchTime %>hr / 0.5hr</span>
       </div>
       <div class="main-container">
         <h1>일주일간 시청시간</h1>
+        <% // 1주일간의 데이터를 가져옵니다. const oneWeekData =
+        wholeData.slice(-7); // 가장 높은 시청 시간을 계산합니다. const
+        maxWatchTime = Math.max(...oneWeekData.map(data => data.time)); %>
         <div class="year-stats">
+          <% oneWeekData.forEach((data, index) => { %>
+          <!-- 인덱스를 가져옵니다 -->
           <div class="month-group">
-            <div class="bar h-100"></div>
-            <p class="month">06.24</p>
+            <% // 시청 시간에 따라 막대 그래프의 높이를 계산합니다. const height
+            = (data.time / maxWatchTime) * 100; %>
+            <div
+              class="bar <%= (index === oneWeekData.length - 1) ? 'bar-today' : '' %>"
+              style="height: <%= height %>%"
+            ></div>
+            <!-- 마지막 요소이면 'bar-today' 클래스 추가 -->
+            <p class="month"><%= data.date.split('-')[2] %></p>
           </div>
-          <div class="month-group">
-            <div class="bar h-50"></div>
-            <p class="month">06.25</p>
-          </div>
-          <div class="month-group">
-            <div class="bar h-75"></div>
-            <p class="month">06.26</p>
-          </div>
-          <div class="month-group">
-            <div class="bar h-25"></div>
-            <p class="month">06.27</p>
-          </div>
-
-          <div class="month-group">
-            <div class="bar h-50"></div>
-            <p class="month">06.29</p>
-          </div>
-          <div class="month-group">
-            <div class="bar h-50"></div>
-            <p class="month">06.30</p>
-          </div>
-          <div class="month-group sel">
-            <div class="bar h-100"></div>
-            <p class="month">Today</p>
-          </div>
+          <% }) %>
         </div>
       </div>
     </div>

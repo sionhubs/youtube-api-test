@@ -57,8 +57,11 @@ body {
 
 .year-stats {
   white-space: nowrap;
-  max-height: 170px;
+  height: 220px; /* max-height를 height로 변경 */
   overflow: hidden;
+  display: flex; /* 요소들을 flexbox로 레이아웃 */
+  align-items: flex-end; /* 아래쪽에 맞추어 요소를 정렬 */
+  justify-content: space-around; /* 요소들 간의 공간을 동일하게 설정 */
 }
 
 .year-stats:hover {
@@ -74,17 +77,21 @@ body {
 
 .month-group {
   cursor: pointer;
-  max-width: 400px;
-  height: 110px;
+  height: 180px; /* 높이를 조정하여 텍스트가 잘리지 않도록 */
   margin: 10px;
-  display: inline-block;
+  display: flex; /* 이 요소도 flexbox로 설정 */
+  flex-direction: column; /* 세로방향으로 요소를 정렬 */
+  align-items: center; /* 가로축 중앙 정렬 */
+  justify-content: flex-end; /* 아래쪽에 맞추어 요소를 정렬 */
+  flex: 1; /* 요소들이 컨테이너 내부 공간을 균등하게 차지 */
 }
 
 .bar {
   background-color: #172055;
-  width: 20px;
+  width: 25px; /* 막대 두께를 늘림 */
   border-radius: 5px;
   margin-bottom: 10px;
+  min-height: 10%;
 }
 
 .month-group:hover .bar,
@@ -102,15 +109,6 @@ body {
   color: #fff;
 }
 
-.h-25 {
-  height: 25%;
-}
-.h-50 {
-  height: 50%;
-}
-.h-75 {
-  height: 75%;
-}
-.h-100 {
-  height: 100%;
+.bar-today {
+  background-color: #b63154; /* 원하는 붉은 색으로 설정 */
 }

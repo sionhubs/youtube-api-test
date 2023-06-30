@@ -56,6 +56,7 @@ router.get("/home", async (req, res) => {
           (wt) => wt.date === currentDate
         );
 
+        // 남은시간
         if (todayWatchTime) {
           elapsedTime = todayWatchTime.time;
           if (todayWatchTime.cal) {
@@ -78,9 +79,6 @@ router.get("/home", async (req, res) => {
         }
 
         console.log(remainingTime);
-        // // ////////////////////////////////////////////////////////////////////////
-        // console.log("videotime////////////////////////");
-        // console.log(todayWatchTime);
 
         // 다시 JSON으로 변환하고 파일에 저장
         fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
@@ -110,16 +108,40 @@ router.get("/video/:id", async function (req, res) {
 
 router.get("/analysis", async function (req, res) {
   try {
-    const data = fs.readFileSync(
-      path.join(__dirname, "../watchTime.json"),
-      "utf8"
+    const currentDate = new Date().toISOString().split("T")[0]; // get current date
+
+    // JSON 파일 동기적으로 읽기
+    let data;
+    try {
+      data = fs.readFileSync(jsonPath, "utf8");
+    } catch (err) {
+      console.log(`Error reading file from disk: ${err}`);
+    }
+
+    // 파싱하여 JavaScript 객체로 변환
+    const database = JSON.parse(data);
+
+    // 오늘의 시청 시간이 이미 있는지 확인
+    let todayWatchTime = database.watchTime.find(
+      (wt) => wt.date === currentDate
     );
-    const watchTimeData = JSON.parse(data);
-    const watchTime = watchTimeData.watchTime;
+    if (!todayWatchTime) {
+      // 오늘의 시청 시간이 없으면 새 항목을 추가합니다.
+      todayWatchTime = {
+        date: currentDate,
+        cal: falase,
+        current: Date.now(),
+        time: 0,
+      };
+      database.watchTime.push(todayWatchTime);
+    }
 
-    const watchTimeFormatted = formatTime(watchTime);
+    const watchTimeFormatted = formatTime(todayWatchTime.time);
 
-    res.render("analysis", { watchTime: watchTimeFormatted });
+    res.render("analysis", {
+      watchTime: watchTimeFormatted,
+      wholeData: database.watchTime,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.render("error");
@@ -131,6 +153,7 @@ router.get("/end", (req, res) => {
   res.render("end");
 });
 
+// 비디오가 시작될때 타이머에 json데이터를 주는 함수
 router.get("/watchTime", (req, res) => {
   fs.readFile("watchTime.json", "utf8", (err, data) => {
     if (err) {
@@ -142,6 +165,7 @@ router.get("/watchTime", (req, res) => {
   });
 });
 
+// 영상이 멈춘 후 json데이터를 다루는 함수
 router.post("/watchTime", (req, res) => {
   const time = req.body.time;
   console.log("Received Time: ", time);
@@ -175,10 +199,6 @@ router.post("/watchTime", (req, res) => {
       todayWatchTime.time = time;
       todayWatchTime.cal = false;
 
-      // // ////////////////////////////////////////////////////////////////////////
-      // console.log("watchtime////////////////////////");
-      // console.log(todayWatchTime);
-
       // 다시 JSON으로 변환하고 파일에 저장
       fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
         if (err) {
@@ -191,6 +211,7 @@ router.post("/watchTime", (req, res) => {
   res.sendStatus(200);
 });
 
+// 영상이 재생될 때 json데이터를 다루는 함수
 router.post("/currentTime", (req, res) => {
   console.log("Received Time:");
   var currentDate = new Date().toISOString().split("T")[0]; // get current date
@@ -221,9 +242,6 @@ router.post("/currentTime", (req, res) => {
       // cal 을 true로
       todayWatchTime.cal = true;
       todayWatchTime.current = Math.floor(Date.now() / 1000);
-      // // ////////////////////////////////////////////////////////////////////////
-      // console.log("currenttime////////////////////////");
-      // console.log(todayWatchTime);
 
       // 다시 JSON으로 변환하고 파일에 저장
       fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {

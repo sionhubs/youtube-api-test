@@ -14,9 +14,9 @@
     },
     {
       "date": "2023-06-30",
-      "cal": true,
-      "current": 1688086863,
-      "time": 79
+      "cal": false,
+      "current": 1688115185,
+      "time": 9
     }
   ]
 }
