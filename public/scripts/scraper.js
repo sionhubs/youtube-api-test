@@ -35,8 +35,6 @@ async function scrapeRecommendedVideos() {
       (video) => video.title !== null && video.videoId !== null
     );
 
-    console.log(recommendedVideos); // 크롤링한 데이터를 콘솔에 출력
-
     await browser.close();
 
     return recommendedVideos;

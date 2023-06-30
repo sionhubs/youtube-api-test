@@ -40,7 +40,7 @@
       // 3. API 코드를 다운로드 받은 다음에 <iframe>을 생성하는 기능 (youtube player도 더불어)
       var player;
       var timerInterval; // 타이머 인터벌 변수
-      var timeLimit = 10 * 60; // 시간 제한을 10분으로 설정 (10분 = 600초)
+      var timeLimit = "<%= timeSet %>"; // 시간 제한을 10분으로 설정 (10분 = 600초)
       var startTime; // 비디오 시작 시간
       var elapsedTime = 0; // 비디오 재생 시간
 
@@ -65,15 +65,39 @@
       }
 
       function onPlayerReady(event) {
-        event.target.playVideo();
-        startTime = Date.now(); // 비디오 시작 시간 설정
-        startTimer(); // 타이머 시작
+        fetch("/watchTime")
+          .then((response) => response.json())
+          .then((data) => {
+            var currentDate = new Date().toISOString().split("T")[0];
+            let todayWatchTime = data.watchTime.find(
+              (wt) => wt.date === currentDate
+            );
+            if (
+              data &&
+              data.watchTime &&
+              data.watchTime.length > 0 &&
+              typeof todayWatchTime.time === "number"
+            ) {
+              elapsedTime = todayWatchTime.time * 1000; // seconds to milliseconds
+            } else {
+              elapsedTime = 0; // 기본값 설정
+            }
+
+            event.target.playVideo();
+            startTimer();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
 
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PAUSED) {
           elapsedTime += Date.now() - startTime; // 비디오 일시정지 시간 누적
           stopTimer(); // 타이머 정지
+
+          // 시간 기록
+          sendWatchTime(); // 시청 시간 서버에 전송
         } else if (event.data == YT.PlayerState.PLAYING) {
           startTime = Date.now(); // 비디오 재생 시간 재설정
           startTimer(); // 타이머 시작
@@ -81,6 +105,22 @@
       }
 
       function startTimer() {
+        // currentTime으로 가서 cal 을 true로 바꿈
+        fetch("/currentTime", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
         clearInterval(timerInterval); // 기존의 타이머 인터벌 제거
 
         var timeLeft = timeLimit - Math.floor(elapsedTime / 1000); // 남은 시간 계산
@@ -99,6 +139,7 @@
               clearInterval(timerInterval);
               timerElement.textContent = "Time's up!";
               // 시간 종료 시 원하는 동작 추가
+              window.location.href = "/end"; // /end로 이동
             }
           }
         }, 1000); // 1초마다 타이머 실행
@@ -118,6 +159,27 @@
           ":" +
           seconds.toString().padStart(2, "0")
         );
+      }
+
+      // 시간 기록 보내기 위함.
+      function sendWatchTime() {
+        var watchTime = Math.floor(elapsedTime / 1000); // milliseconds to seconds
+        console.log("time: ", watchTime);
+        fetch("/watchTime", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ time: watchTime }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
     </script>
   </body>

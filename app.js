@@ -4,10 +4,13 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require('cookie-parser');  // 쿠키 처리 미들웨어를 추가합니다.
 const app = express();
+const bodyParser = require('body-parser');
+
 
 // 웹페이지의 라우트(경로)를 정의하는 파일을 불러옴
 const defaultRoutes = require("./routes/default");
 const videosRoutes = require("./routes/video");
+
 
 // ejs 템플릿(html에 자바스크립트 문법을 사용할 수 있는 파일)을 쉽게 가져오기 위한 코드
 app.set("view engine", "ejs");
@@ -20,6 +23,8 @@ app.use(cookieParser());  // Express 앱이 쿠키를 파싱하도록 설정합�
 // "../public/styles/style.css" 이렇게 불러오지 않고 "/styles/style.css" 이렇게 불러오는게 가능
 app.use(express.static("public"));
 
+app.use(bodyParser.json());
+
 // 쿠키를 설정하는 미들웨어
 app.use((req, res, next) => {
   res.cookie('key', 'value', { SameSite: 'None', secure: false }); // 쿠키를 설정합니다.
@@ -30,6 +35,7 @@ app.use((req, res, next) => {
 app.use("/", defaultRoutes);
 app.use("/", videosRoutes);
 
+
 // 클라이언트에서 문제가 발생했을 때 404오류 창을 띄움
 app.use(function (req, res) {
   res.status(404).render("404");
@@ -39,6 +45,7 @@ app.use(function (req, res) {
 app.use(function (error, req, res, next) {
   res.status(500).render("500");
 });
+
 
 // http://localhost:8080로 접속하면 됩니다
 app.listen(8080, () => {
