@@ -113,7 +113,10 @@ router.get("/home", async (req, res) => {
         if (remainingTime <= 0) {
           res.redirect("/end");
         } else {
-          remainingTime = formatTime(remainingTime);
+          remainingTime =
+            Math.floor((remainingTime % 3600) / 60) +
+            ":" +
+            (remainingTime % 60);
           res.render("videos", { videos, remainingTime });
         }
 
