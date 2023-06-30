@@ -18,14 +18,24 @@
   <body>
     <%- include('includes/sidebar') %>
     <div class="start">
+      <%
+        var timeArr = watchTime.split(' '); // "시hr 분min 초sec" 형식의 문자열을 공백으로 분리합니다.
+        var hours = parseInt(timeArr[0]); // 시간을 정수로 변환합니다.
+        var minutes = parseInt(timeArr[1]) / 60; // 분을 시간 단위로 변환합니다.
+        var seconds = parseInt(timeArr[2]) / 3600; // 초를 시간 단위로 변환합니다.
+
+        var totalTimeInHours = hours + minutes + seconds; // 총 시간을 시간 단위로 계산합니다.
+        totalTimeInHours = totalTimeInHours.toFixed(1); // 소수점 한 자리까지 반올림하고 문자열로 반환합니다.
+      %>
+
       <h2 class="start_h2">Analysis | 김아무개님 분석</h2>
       <h3 class="start_today">>> TODAY</h3>
       <div class="bar-chart primary" data-total="76" animated>
         <span
           class="bar-chart--inner"
-          style="width: <%= (watchTime / 0.5) * 100 %>%"
+          style="width: <%= (totalTimeInHours / 0.5) * 100 %>%"
         ></span>
-        <span class="bar-chart--text"><%= watchTime %>hr / 0.5hr</span>
+        <span class="bar-chart--text"><%= totalTimeInHours %>hr / 0.5hr</span>
       </div>
 
       <div class="main-container">
@@ -54,32 +64,44 @@
           <span id="close-modal"><i class="ion ion-md-close"></i></span>
           <img src="/src/logo_login.png" alt="bigshorts" />
         </div>
+        <% 
+          // 모든 데이터의 시청 시간을 더합니다.
+          let totalWatchTime = 0;
+          for (let data of wholeData) {
+            totalWatchTime += data.time;
+          }
+        %>
         <div class="ft-recipe__content">
           <header class="content__header">
             <div class="row-wrapper">
-              <h2 class="recipe-title"><br />시청 분석</h2>
+              <h2 class="recipe-title"><br />영상 시청 대신...</h2>
             </div>
             <ul class="recipe-details">
               <li class="recipe-details-item time">
                 <i class="ion ion-ios-clock-outline"></i
-                ><span class="value">20</span><span class="title">videos</span>
+                ><span class="value"><%= (totalWatchTime / 3600/ 5).toFixed(1) %>권</span><span class="title"> 책 읽기</span>
               </li>
               <li class="recipe-details-item ingredients">
                 <i class="ion ion-ios-book-outline"></i
-                ><span class="value">39</span><span class="title">Shorts</span>
+                ><span class="value"><%= (totalWatchTime /3600 / 2).toFixed(1) %>편</span><span class="title"> 영화 관람</span>
               </li>
               <li class="recipe-details-item servings">
                 <i class="ion ion-ios-person-outline"></i
-                ><span class="value">5시간35분</span
-                ><span class="title">시청시간</span>
+                ><span class="value"><%= Math.floor(totalWatchTime / 3600  * 600) %>kcal</span
+                ><span class="title"> 런닝 칼로리 소모</span>
               </li>
             </ul>
           </header>
+          <% 
+            let totalHours = Math.floor(totalWatchTime / 3600); // 초를 시간으로 변환
+            let totalMinutes = Math.floor((totalWatchTime % 3600) / 60); // 나머지를 분으로 변환
+            let totalSeconds = totalWatchTime % 60; // 나머지 초
+          %>
           <p class="description">
-            사용자님의 시청 영상을 분석하여 정리한 관심태그입니다. 관심태그에
-            따라 활동을 추천합니다.<br /><br />#뷰티 #아이돌 메이크업 #잔나비
-            #브이로그 #산악브이로그<br /><br />
+            등의 유익한 활동을 할 수 있었네요! 저희 '빅쇼츠' 이용 후 사용자님의 전체 영상 시청 시간은 <span style="color: #b63154"><%= totalHours %>시간 <%= totalMinutes %>분 <%= totalSeconds %>초</span>입니다. 
+            <br /><br />무의미한 영상 시청 중독을 치유하고, 자신을 가꾸고 주변을 돌아보는 데 시간을 투자해 보세요!<br /><br />
           </p>
+        </div>
         </div>
       </div>
     </div>
