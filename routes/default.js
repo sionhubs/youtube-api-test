@@ -19,17 +19,20 @@ function formatTime(timeInSeconds) {
   return `${hours}hr ${minutes}min ${seconds}sec`;
 }
 
-// 시청 제한시간, 일단은 1분으로 설정해둠
-var timeSet = 600;
+// 시청 제한시간
+var timeSet;
 
 // 로그인 창 렌더링, url이 http://localhost:8080/ 일 때 렌더링 됨
 router.get("/", function (req, res) {
-  res.render("login");
+  res.render("main");
 });
 
 // 시간 제한 설정 버튼을 누를때
 router.post("/timeset", function (req, res) {
-  timeset = req.body;
+  timeSet = req.body;
+  if (!timeSet) {
+    timeSet = 600;
+  }
   res.redirect("/home");
 });
 

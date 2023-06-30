@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "Happiness-Sans-Title";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/Happiness-Sans-Title.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Happiness-Sans-Title";
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+
+  display: flex;
+
+  background-color: #07064a;
+}
+
+.video {
+  width: 50vw;
+  height: 50vh;
+  background-color: black;
+  text-align: center;
+  margin-top: 3.8vh;
+}
