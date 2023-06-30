@@ -27,6 +27,7 @@ var existTime = false;
 // 로그인 창 렌더링, url이 http://localhost:8080/ 일 때 렌더링 됨
 router.get("/", function (req, res) {
   var currentDate = new Date().toISOString().split("T")[0]; // get current date
+  console.log(new Date());
   // JSON 파일 읽기
   fs.readFile(jsonPath, "utf8", (err, data) => {
     if (err) {
@@ -204,7 +205,17 @@ router.get("/analysis", async function (req, res) {
 
 // 시간종료 창 렌더링, url이 http://localhost:8080/end 일 때 렌더링 됨
 router.get("/end", (req, res) => {
-  res.render("end");
+  // 현재 시간 가져오기
+  var now = new Date();
+
+  // 내일 날짜 설정
+  var tomorrow = new Date(now);
+  tomorrow.setDate(now.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0); // 내일 00:00:00 시간 설정
+
+  // 현재 시간과 내일 00:00:00 사이의 시간 차이 계산
+  var timeDifference = tomorrow.getTime() - now.getTime();
+  res.render("end", { timeDifference });
 });
 
 // 비디오가 시작될때 타이머에 json데이터를 주는 함수
