@@ -129,12 +129,27 @@ router.get("/analysis", async function (req, res) {
       // 오늘의 시청 시간이 없으면 새 항목을 추가합니다.
       todayWatchTime = {
         date: currentDate,
-        cal: falase,
+        cal: false,
         current: Date.now(),
         time: 0,
       };
       database.watchTime.push(todayWatchTime);
+    } else {
+      elapsedTime = todayWatchTime.time;
+      if (todayWatchTime.cal) {
+        todayWatchTime.time +=
+          Math.floor(Date.now() / 1000) - todayWatchTime.current;
+        todayWatchTime.cal = false;
+        elapsedTime = todayWatchTime.time;
+      }
     }
+
+    // 다시 JSON으로 변환하고 파일에 저장
+    fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
+      if (err) {
+        console.log(`Error writing file: ${err}`);
+      }
+    });
 
     const watchTimeFormatted = formatTime(todayWatchTime.time);
 

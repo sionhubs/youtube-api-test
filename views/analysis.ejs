@@ -27,22 +27,21 @@
         ></span>
         <span class="bar-chart--text"><%= watchTime %>hr / 0.5hr</span>
       </div>
+
       <div class="main-container">
         <h1>일주일간 시청시간</h1>
-        <% // 1주일간의 데이터를 가져옵니다. const oneWeekData =
-        wholeData.slice(-7); // 가장 높은 시청 시간을 계산합니다. const
-        maxWatchTime = Math.max(...oneWeekData.map(data => data.time)); %>
+        <!-- 일주일간의 데이터를 가져옵니다, 가장 높은 시청시간을 계산 합니다 -->
+        <% var oneWeekData = wholeData.slice(-7); var maxWatchTime =
+        Math.max(...oneWeekData.map(data => data.time)); %>
         <div class="year-stats">
+          <!-- 인덱스를 가져오고 시청시간에 따라 막대그래프의 높이를 계산합니다 -->
           <% oneWeekData.forEach((data, index) => { %>
-          <!-- 인덱스를 가져옵니다 -->
           <div class="month-group">
-            <% // 시청 시간에 따라 막대 그래프의 높이를 계산합니다. const height
-            = (data.time / maxWatchTime) * 100; %>
+            <% var height = (data.time / maxWatchTime) * 100 %>
             <div
               class="bar <%= (index === oneWeekData.length - 1) ? 'bar-today' : '' %>"
               style="height: <%= height %>%"
             ></div>
-            <!-- 마지막 요소이면 'bar-today' 클래스 추가 -->
             <p class="month"><%= data.date.split('-')[2] %></p>
           </div>
           <% }) %>
