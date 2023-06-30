@@ -2,176 +2,69 @@ body {
   display: flex;
 }
 
-#sidebar {
-  @font-face {
-    font-family: "CWDangamAsac-Bold";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff")
-      format("woff");
-    font-weight: normal;
-    font-style: normal;
-  }
-  body {
-    background-color: #07064a;
-  }
-
-  .logo_sidebar {
-    width: 50%;
-    margin-left: 35px;
-  }
-  aside {
-    color: #fff;
-    width: 250px;
-    padding-left: 20px;
-    height: 100vh;
-    background-image: linear-gradient(30deg, #ffffff, #07064a);
-    border-top-right-radius: 80px;
-  }
-
-  aside a {
-    font-size: 17px;
-    color: #fff;
-    display: block;
-    padding: 12px;
-    padding-left: 20px;
-    padding-top: 30px;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  aside a:hover {
-    color: #ffffff;
-    background: #07064a;
-    outline: none;
-    position: relative;
-    background-color: #07064a;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-  }
-
-  aside a i {
-    margin-right: 15px;
-  }
-
-  aside a:hover::after {
-    content: "";
-    position: absolute;
-    background-color: transparent;
-    bottom: 100%;
-    right: 0;
-    height: 35px;
-    width: 35px;
-    border-bottom-right-radius: 18px;
-    box-shadow: 0 20px 0 0 #07064a;
-  }
-
-  aside a:hover::before {
-    content: "";
-    position: absolute;
-    background-color: transparent;
-    top: 38px;
-    right: 0;
-    height: 35px;
-    width: 35px;
-    border-top-right-radius: 18px;
-    box-shadow: 0 -20px 0 0 #07064a;
-  }
-
-  aside h1 {
-    margin: 0;
-    font-size: 30px;
-    padding: 39px 0px 20px 10px;
-    font-family: "CWDangamAsac-Bold";
-  }
-
-  body {
-    font-family: "Roboto";
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-  }
-
-  .social {
-    height: 0;
-  }
-
-  .social i:before {
-    width: 14px;
-    height: 14px;
-    font-size: 14px;
-    position: fixed;
-    color: #fff;
-    background: #0077b5;
-    padding: 10px;
-    border-radius: 50%;
-    top: 5px;
-    right: 5px;
-  }
-}
-
 #timer {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   padding: 10px;
   background-color: #fff;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 #main-content {
   flex-grow: 1;
-  background-color: #fff; /* 원하는 배경색으로 변경 */
-  /* 여기에 main content에 대한 추가 스타일을 작성 */
+  background-color: #07064a;
+  align-items: center;
+  justify-content: center;
+  padding-left: 250px;
+  flex-wrap: wrap; /* Allow items to wrap when the screen size decreases */
+  overflow: auto; /* Add scrollbars when content overflows */
 }
 
 #main-content ul {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* 각 영상 간의 간격 설정 */
-  justify-content: center; /* 중앙에 영상들을 정렬 */
-  padding: 0;
-  list-style: none; /* 기본 리스트 스타일 제거 */
+  gap: 20px;
+  justify-content: center;
+  padding: 20px; /* Add padding to separate content from sidebar */
+  list-style: none;
 }
 
 #main-content ul li {
-  flex-basis: calc(
-    25% - 20px
-  ); /* 영상들의 너비 설정, 4개의 영상이 한 줄에 나오게 설정 */
-  box-sizing: border-box; /* padding과 border가 너비에 포함되도록 설정 */
+  flex-basis: calc(25% - 20px);
+  box-sizing: border-box;
 }
 
 #main-content .video img {
-  width: 100%; /* 이미지가 부모 요소의 너비를 가득 채우도록 설정 */
-  height: auto; /* 이미지의 높이는 자동으로 설정 */
-  max-height: 200px; /* 이미지의 최대 높이 설정 */
-  object-fit: cover; /* 이미지 비율 유지하며 부모 요소 채우도록 설정 */
+  width: 100%;
+  height: 200px;
+  max-height: 200px;
+  object-fit: cover;
 }
 
 @media (max-width: 1200px) {
   #main-content ul li {
-    flex-basis: calc(
-      33.333% - 20px
-    ); /* 화면 너비가 1200px 이하일 때 한 줄에 3개의 영상 */
+    flex-basis: calc(33.333% - 20px);
   }
 }
 
 @media (max-width: 900px) {
   #main-content ul li {
-    flex-basis: calc(
-      50% - 20px
-    ); /* 화면 너비가 900px 이하일 때 한 줄에 2개의 영상 */
+    flex-basis: calc(50% - 20px);
   }
 }
 
 @media (max-width: 600px) {
   #main-content ul li {
-    flex-basis: calc(
-      100% - 20px
-    ); /* 화면 너비가 600px 이하일 때 한 줄에 1개의 영상 */
+    flex-basis: calc(100% - 20px);
   }
 }
 
 .video h4 {
-  max-width: 300px; /* 원하는 폭으로 설정하세요. */
+  max-width: 300px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #fff;
 }

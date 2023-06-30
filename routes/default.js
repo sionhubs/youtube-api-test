@@ -20,17 +20,46 @@ function formatTime(timeInSeconds) {
 }
 
 // 시청 제한시간
-var timeSet;
+let timeSet = 600;
+// 오늘의 시청시간이 존재하는가?
+var existTime = false;
 
 // 로그인 창 렌더링, url이 http://localhost:8080/ 일 때 렌더링 됨
 router.get("/", function (req, res) {
-  res.render("main");
+  var currentDate = new Date().toISOString().split("T")[0]; // get current date
+  // JSON 파일 읽기
+  fs.readFile(jsonPath, "utf8", (err, data) => {
+    if (err) {
+      res.render("500");
+    } else {
+      // 파싱하여 JavaScript 객체로 변환
+      const database = JSON.parse(data);
+
+      // 오늘의 시청 시간이 이미 있는지 확인
+      let todayWatchTime = database.watchTime.find(
+        (wt) => wt.date === currentDate
+      );
+      if (!todayWatchTime) {
+        existTime = false;
+      } else {
+        existTime = todayWatchTime.time;
+      }
+
+      // 다시 JSON으로 변환하고 파일에 저장
+      fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
+        if (err) {
+          res.render("500");
+        }
+      });
+    }
+  });
+  res.render("main", { existTime });
 });
 
-// 시간 제한 설정 버튼을 누를때
 router.post("/timeset", function (req, res) {
-  timeSet = req.body;
-  if (!timeSet) {
+  timeSet = parseInt(req.body.numberInput, 10) * 60; // Parse the input as an integer
+  if (isNaN(timeSet) || timeSet <= 0) {
+    // Check if the input is not a number or less than or equal to zero
     timeSet = 600;
   }
   res.redirect("/home");
@@ -49,11 +78,10 @@ router.get("/home", async (req, res) => {
     // JSON 파일 읽기
     fs.readFile(jsonPath, "utf8", (err, data) => {
       if (err) {
-        console.log(`Error reading file from disk: ${err}`);
+        res.render("500");
       } else {
         // 파싱하여 JavaScript 객체로 변환
         const database = JSON.parse(data);
-
         // 오늘의 시청 시간이 이미 있는지 확인
         let todayWatchTime = database.watchTime.find(
           (wt) => wt.date === currentDate
@@ -69,6 +97,14 @@ router.get("/home", async (req, res) => {
             elapsedTime = todayWatchTime.time;
           }
         } else {
+          // 오늘의 시청 시간이 없으면 새 항목을 추가합니다.
+          todayWatchTime = {
+            date: currentDate,
+            cal: false,
+            current: Date.now(),
+            time: timeSet,
+          };
+          database.watchTime.push(todayWatchTime);
           elapsedTime = 0;
         }
 
@@ -86,14 +122,13 @@ router.get("/home", async (req, res) => {
         // 다시 JSON으로 변환하고 파일에 저장
         fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
           if (err) {
-            console.log(`Error writing file: ${err}`);
+            res.render("500");
           }
         });
       }
     });
   } catch (error) {
-    console.error("Error:", error);
-    res.render("error");
+    res.render("500");
   }
 });
 
@@ -104,21 +139,20 @@ router.get("/video/:id", async function (req, res) {
     const video = req.params.id;
     res.render("video-detail", { video, timeSet });
   } catch (error) {
-    console.error("Error:", error);
-    res.render("error");
+    res.render("500");
   }
 });
 
 router.get("/analysis", async function (req, res) {
   try {
-    const currentDate = new Date().toISOString().split("T")[0]; // get current date
+    var currentDate = new Date().toISOString().split("T")[0]; // get current date
 
     // JSON 파일 동기적으로 읽기
     let data;
     try {
       data = fs.readFileSync(jsonPath, "utf8");
     } catch (err) {
-      console.log(`Error reading file from disk: ${err}`);
+      res.render("500");
     }
 
     // 파싱하여 JavaScript 객체로 변환
@@ -150,7 +184,7 @@ router.get("/analysis", async function (req, res) {
     // 다시 JSON으로 변환하고 파일에 저장
     fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
       if (err) {
-        console.log(`Error writing file: ${err}`);
+        res.render("500");
       }
     });
 
@@ -161,8 +195,7 @@ router.get("/analysis", async function (req, res) {
       wholeData: database.watchTime,
     });
   } catch (error) {
-    console.error("Error:", error);
-    res.render("error");
+    res.render("500");
   }
 });
 
@@ -192,7 +225,7 @@ router.post("/watchTime", (req, res) => {
   // JSON 파일 읽기
   fs.readFile(jsonPath, "utf8", (err, data) => {
     if (err) {
-      console.log(`Error reading file from disk: ${err}`);
+      res.render("500");
     } else {
       // 파싱하여 JavaScript 객체로 변환
       const database = JSON.parse(data);
@@ -220,7 +253,7 @@ router.post("/watchTime", (req, res) => {
       // 다시 JSON으로 변환하고 파일에 저장
       fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
         if (err) {
-          console.log(`Error writing file: ${err}`);
+          res.render("500");
         }
       });
     }
@@ -237,7 +270,7 @@ router.post("/currentTime", (req, res) => {
   // JSON 파일 읽기
   fs.readFile(jsonPath, "utf8", (err, data) => {
     if (err) {
-      console.log(`Error reading file from disk: ${err}`);
+      res.render("500");
     } else {
       // 파싱하여 JavaScript 객체로 변환
       const database = JSON.parse(data);
@@ -264,7 +297,7 @@ router.post("/currentTime", (req, res) => {
       // 다시 JSON으로 변환하고 파일에 저장
       fs.writeFile(jsonPath, JSON.stringify(database, null, 2), (err) => {
         if (err) {
-          console.log(`Error writing file: ${err}`);
+          res.render("500");
         }
       });
     }

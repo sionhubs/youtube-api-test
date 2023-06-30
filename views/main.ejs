@@ -16,22 +16,28 @@
         <img class="logo_login" src="../src/logo_login.png" />
       </div>
       <div class="login_div">
-        <div style="margin-bottom: 12vh">
-          <hr class="hr1" />
-          <img class="google" src="../src/google.png" />
-          <hr class="hr2" />
-        </div>
-        <h3 style="clear: both; color: #c5cae5">구글계정을 로그인해주세요</h3>
-        <div class="button_sign_div"></div>
-
+        <% if (!existTime) { %>
+        <h3 style="clear: both; color: #c5cae5">시청 시간을 입력하세요</h3>
         <form action="/timeset" method="POST">
           <input
+            id="minute"
             type="number"
             name="numberInput"
-            placeholder="숫자를 입력하세요"
+            min="0"
+            max="120"
+            placeholder="00분"
+            required
           />
-          <button class="button_sign">Main</button>
+          <button class="button_sign">영상 시청하기</button>
         </form>
+        <% } else { %>
+        <h3 style="clear: both; color: #c5cae5">
+          오늘 총 <%= existTime %> 분 시청하셨습니다
+        </h3>
+        <form action="/timeset" method="POST">
+          <button class="button_sign">영상 시청하기</button>
+        </form>
+        <% } %>
       </div>
     </div>
   </body>

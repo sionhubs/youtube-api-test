@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "CWDangamAsac-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  display: flex;
+}
+
+.container {
+  width: 100%;
+  padding-left: 250px;
+  text-align: center;
+  background-color: #07064a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-family: "CWDangamAsac-Bold";
+  font-size: 36px;
+  margin: 0;
+  color: #ffffff;
+}
+
+.exclamation {
+  font-size: 120px;
+  margin-bottom: 20px;
+}
+
+.box {
+  background-color: #4d4d4d;
+  width: 300px;
+  height: 150px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.remaining-time {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-top: 10px;
+}

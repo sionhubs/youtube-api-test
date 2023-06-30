@@ -6,14 +6,11 @@
   font-style: normal;
 }
 
-/* Login: 계정에 따른 맞춤형 분석 제공, 개인정보 이슈 관리  */
-
 body {
   width: 100%;
   background: #07064a;
 }
 
-/* Forms */
 .login_div {
   position: absolute;
   top: 35vh;
@@ -26,8 +23,6 @@ body {
   overflow: hidden;
   text-align: center;
 }
-
-/* Bouton Sign In */
 
 .button_sign {
   width: 30vw;
@@ -50,7 +45,6 @@ body {
 .logo_box {
   display: inline-block;
   margin-left: 5vw;
-  float: left;
 }
 
 .logo {
@@ -71,17 +65,12 @@ body {
   width: 38%;
 }
 
-.hr1 {
-  width: 12vw;
-  float: left;
-}
-.google {
-  float: left;
-  margin-left: 2vw;
-  width: 15%;
-}
-.hr2 {
-  margin-left: 2vw;
-  width: 13vw;
-  float: left;
+#minute {
+  width: 30vh;
+  height: 10vh;
+  font-size: 30px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
 }

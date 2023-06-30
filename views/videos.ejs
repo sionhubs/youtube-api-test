@@ -11,7 +11,6 @@
     <!-- 유튜브 iframe 불러오기 -->
     <script src="https://www.youtube.com/iframe_api" defer></script>
     <!-- 시간 제한을 설정하는 자바스크립트 코드 불러오기 -->
-    <script src="/scripts/time.js"></script>
     <script
       src="https://kit.fontawesome.com/510fbf9652.js"
       crossorigin="anonymous"
@@ -28,14 +27,13 @@
         <% for(var i=0; i < videos.length; i++) { %>
         <li>
           <div class="video">
-            <h4><%= videos[i].title %></h4>
-            <img
-              src="<%= videos[i].thumbnail || '/src/default-thumbnail.png' %>"
-              alt="<%= videos[i].title %> thumbnail"
-            />
-            <a href="http://localhost:8080/video/<%= videos[i].videoId %>"
-              >Watch Video</a
-            >
+            <a href="http://localhost:8080/video/<%= videos[i].videoId %>">
+              <h4><%= videos[i].title %></h4>
+              <img
+                src="<%= videos[i].thumbnail || '/src/default-thumbnail.png' %>"
+                alt="<%= videos[i].title %> thumbnail"
+              />
+            </a>
           </div>
         </li>
         <% } %>

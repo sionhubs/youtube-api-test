@@ -11,14 +11,37 @@
       crossorigin="anonymous"
       defer
     ></script>
+    <style>
+      main {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+
+        height: 100vh;
+        background-color: #07064a; /* Choose a background color for the error page */
+      }
+
+      main h1 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffffff; /* Choose a text color for the heading */
+        margin-bottom: 10px; /* Add some bottom margin to separate heading and paragraph */
+      }
+
+      main p {
+        font-size: 16px;
+        color: #ffffff; /* Choose a text color for the paragraph */
+      }
+    </style>
   </head>
   <body>
     <%- include('includes/sidebar') %>
     <main>
       <h1>Something went wrong!</h1>
       <p>
-        Unfortunately, something went wrong on the server - we're doing our best
-        to fix it as quickly as possible!
+        안타깝게도 서버에 문제가 발생하였습니다 - 고치기 위해 최선의 노력을
+        다하겠습니다!
       </p>
     </main>
   </body>

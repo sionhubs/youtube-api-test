@@ -5,19 +5,25 @@
   font-weight: normal;
   font-style: normal;
 }
+
 body {
-  background-color: #07064a;
+  font-family: "Roboto";
+  width: 100%;
+  height: 100vh;
+  margin: 0;
 }
 
 .logo_sidebar {
   width: 50%;
   margin-left: 35px;
 }
+
 aside {
   color: #fff;
   width: 250px;
-  padding-left: 20px;
   height: 100vh;
+  position: fixed;
+  padding-left: 20px;
   background-image: linear-gradient(30deg, #ffffff, #07064a);
   border-top-right-radius: 80px;
 }
@@ -76,28 +82,4 @@ aside h1 {
   font-size: 30px;
   padding: 39px 0px 20px 10px;
   font-family: "CWDangamAsac-Bold";
-}
-
-body {
-  font-family: "Roboto";
-  width: 100%;
-  height: 100vh;
-  margin: 0;
-}
-
-.social {
-  height: 0;
-}
-
-.social i:before {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-  position: fixed;
-  color: #fff;
-  background: #0077b5;
-  padding: 10px;
-  border-radius: 50%;
-  top: 5px;
-  right: 5px;
 }
